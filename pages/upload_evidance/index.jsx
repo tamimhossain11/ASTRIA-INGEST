@@ -3,7 +3,6 @@ import Tippy from "@tippyjs/react";
 import "tippy.js/dist/tippy.css"; // optional
 import { FileUploader } from "react-drag-drop-files";
 import { useDispatch } from "react-redux";
-import { showPropatiesModal } from "../../redux/counterSlice";
 import Meta from "../../components/Meta";
 import Image from "next/image";
 
