@@ -6,9 +6,7 @@ html {
 @tailwind utilities;
 
 @layer base {
-	* {
-		text-transform: capitalize;
-	}
+	* 
 	.light body {
 		background: #fff !important;
 		color: #000;
@@ -673,8 +671,6 @@ html {
 		--tw-ring-offset-color: #fff;
 		--tw-ring-color: #2563eb;
 		--tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
-		--tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);
-		border-color: #2563eb;
 		box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
 		outline: 2px solid transparent;
 		outline-offset: 2px;

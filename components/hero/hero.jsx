@@ -18,7 +18,7 @@ const Hero = () => {
             in the field of Digital Forensics
             </p>
             <Link
-              href="/registration"
+              href="/loginpage"
               className="inline-block rounded-md bg-black-900 dark:bg-jacarta-700 py-3 px-8 text-center font-semibold text-white shadow-md transition-all hover:bg-black-700"
             >
               Join us today

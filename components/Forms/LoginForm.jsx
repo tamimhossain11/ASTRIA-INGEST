@@ -6,6 +6,8 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { FormControl, InputLabel, OutlinedInput, InputAdornment, IconButton,} from '@mui/material';
 import Link from "next/link";
+import { useRouter } from 'next/router';
+import {SignIn, signIn} from "next-auth/react";
 
 
 const LoginForm = () => {
@@ -29,19 +31,16 @@ const LoginForm = () => {
     const handlePasswordChange = (e) => {
         setPassword(e.target.value);
     };
+    const router = useRouter();
 
-
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const trimmedEmail = email.trim();
-        const trimmedPassword = password.trim();
+        console.log("Email:", email);
+        console.log("Password:", password);
 
-        console.log("Email:", trimmedEmail);
-        console.log("Password:", trimmedPassword);
-
-        if (trimmedEmail === "amdtamim3@gmail.com" && trimmedPassword === "1234") {
-            ("/home");
+        if (email === "amdtamim3@gmail.com" && password === "1234") {
+            router.push("/profile"); // Navigate to the desired page on successful login
         } else {
             alert("Invalid email or password");
         }
@@ -70,7 +69,6 @@ const LoginForm = () => {
                 <FormControl sx={{ mb: 2,  width: '80%', }}>
                     <InputLabel
                         htmlFor="outlined-adornment-Email or Number"
-                        
                         sx={responsiveInputLabel}
                     >
                         Email or Number*
@@ -86,7 +84,7 @@ const LoginForm = () => {
                         
                         id="email"
                         type="email"
-                        onChange={emailValidation}
+                        onChange={emailValidation || handleChange}
                         value={email}
                         className={email.length === 0 ? "input-control fill-email" : isEmailCorrect ? "input-control valid-email" : "input-control invalid-email"}
                         endAdornment={

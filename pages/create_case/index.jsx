@@ -27,7 +27,6 @@ const Create = () => {
   ];
   const [file, setFile] = useState("");
 
-  const dispatch = useDispatch();
 
   const handleChange = (file) => {
     setFile(file.name);
