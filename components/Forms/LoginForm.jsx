@@ -1,137 +1,133 @@
 import React, { useState } from "react";
-import {Button} from "../../components/button";
-import {Text} from "../../components/text";
-import TaskAltIcon from '@mui/icons-material/TaskAlt';
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import { FormControl, InputLabel, OutlinedInput, InputAdornment, IconButton,} from '@mui/material';
+import axios from "axios";
+import { useRouter } from "next/router"; // Import useRouter hook
+import { Button } from "../../components/button";
+import { Text } from "../../components/text";
+import TaskAltIcon from "@mui/icons-material/TaskAlt";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import {
+  FormControl,
+  InputLabel,
+  OutlinedInput,
+  InputAdornment,
+  IconButton,
+} from "@mui/material";
 import Link from "next/link";
-import { useRouter } from 'next/router';
-import {SignIn, signIn} from "next-auth/react";
-
 
 const LoginForm = () => {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [isEmailCorrect, setIsEmailCorrect] = useState(false);
-    const [rememberMe, setRememberMe] = useState(false); // Add rememberMe state
+  const [username, setUsername] = useState(""); // Add username state
+  const [password, setPassword] = useState("");
+  const [rememberMe, setRememberMe] = useState(false);
 
-    const emailValidation = (e) => {
-        const pattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
-        const emailValue = e.target.value;
-        setEmail(emailValue);
+  const handleUsernameChange = (e) => {
+    setUsername(e.target.value); // Update username state
+  };
 
-        if (emailValue.match(pattern)) {
-            setIsEmailCorrect(true);
-        } else {
-            setIsEmailCorrect(false);
-        }
-    };
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+  };
 
-    const handlePasswordChange = (e) => {
-        setPassword(e.target.value);
-    };
-    const router = useRouter();
+  const [showPassword, setShowPassword] = React.useState(false);
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+  const router = useRouter(); // Initialize useRouter hook
 
-        console.log("Email:", email);
-        console.log("Password:", password);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-        if (email === "amdtamim3@gmail.com" && password === "1234") {
-            router.push("/profile"); // Navigate to the desired page on successful login
-        } else {
-            alert("Invalid email or password");
-        }
-    };
-    const [showPassword, setShowPassword] = React.useState(false);
-    const handleClickShowPassword = () => setShowPassword((show) => !show);
-    const handleMouseDownPassword = (event) => {
-        event.preventDefault();
-    };
-    const responsiveInput = {
-        height: '50px',
-        borderRadius: '10px',
+    try {
+      // Send POST request to authentication API route
+      const response = await axios.post("/api/authenticate", {
+        username, // Use username state
+        password,
+      });
 
-    };
+      // If authentication is successful, redirect to profile page
+      router.push("/profile");
+    } catch (error) {
+      // If authentication fails, display error message
+      alert("Invalid username or password");
+    }
+  };
 
-    const responsiveInputLabel = {
-        backgroundColor: 'white',
-        fontSize: '15px',
-        marginLeft: '5px',
-        border:'white'
-    };
+  const responsiveInput = {
+    height: "50px",
+    borderRadius: "10px",
+  };
 
-    return (
-        <>
-            <form onSubmit={handleSubmit} className="w-[100%] ml-[8%] md:w-full">
-                <FormControl sx={{ mb: 2,  width: '80%', }}>
-                    <InputLabel
-                        htmlFor="outlined-adornment-Email or Number"
-                        sx={responsiveInputLabel}
-                    >
-                        Email or Number*
-                    </InputLabel>
-                    <OutlinedInput
-                        style={responsiveInput}
-                        sx={{
-                            paddingLeft: '10px',
-                            fontSize: '20px',
-                        }}
-                    
-                   
-                        
-                        id="email"
-                        type="email"
-                        onChange={emailValidation || handleChange}
-                        value={email}
-                        className={email.length === 0 ? "input-control fill-email" : isEmailCorrect ? "input-control valid-email" : "input-control invalid-email"}
-                        endAdornment={
-                            <InputAdornment position="end">
-                                {isEmailCorrect && (
-                                    <IconButton>
-                                        <TaskAltIcon />
-                                    </IconButton>
-                                )}
-                            </InputAdornment>
-                        }
-                    />
-                </FormControl>
+  const responsiveInputLabel = {
+    backgroundColor: "white",
+    fontSize: "15px",
+    marginLeft: "5px",
+    border: "white",
+  };
 
-                <FormControl sx={{ mt: 2, width: '80%' }}>
-                    <InputLabel
-                        htmlFor="outlined-adornment-password"
-                        sx={responsiveInputLabel}
-                    >
-                        Password*
-                    </InputLabel>
-                    <OutlinedInput
-                        style={responsiveInput}
-                        sx={{
-                            paddingLeft: '10px',
-                            fontSize: '20px',
-                        }}
+  return (
+    <>
+      <form onSubmit={handleSubmit} className="w-[100%] ml-[8%] md:w-full">
+        <FormControl sx={{ mb: 2, width: "80%" }}>
+          <InputLabel
+            htmlFor="outlined-adornment-Email or Number"
+            sx={responsiveInputLabel}
+          >
+            User Name*
+          </InputLabel>
+          <OutlinedInput
+            style={responsiveInput}
+            sx={{
+              paddingLeft: "10px",
+              fontSize: "20px",
+            }}
+            id="username"
+            type="text" // Change type to "text"
+            onChange={handleUsernameChange} // Use handleUsernameChange function
+            value={username} // Use username state
+            endAdornment={
+              <InputAdornment position="end">
+                <IconButton>
+                  <TaskAltIcon />
+                </IconButton>
+              </InputAdornment>
+            }
+          />
+        </FormControl>
 
-                        aria-describedby="outlined-weight-helper-text"
-                        id="outlined-adornment-password"
-                        type={showPassword ? 'text' : 'password'}
-                        onChange={handlePasswordChange}
-                        value={password}
-                        endAdornment={
-                            <InputAdornment position="end" style={{ padding: "10px" }}>
-                                <IconButton
-                                    aria-label="toggle password visibility"
-                                    onClick={handleClickShowPassword}
-                                    onMouseDown={handleMouseDownPassword}
-                                    edge="end"
-                                >
-                                    {showPassword ? <Visibility /> : <VisibilityOff />}
-                                </IconButton>
-                            </InputAdornment>
-                        }
-                    />
-                </FormControl>
+        <FormControl sx={{ mt: 2, width: "80%" }}>
+          <InputLabel
+            htmlFor="outlined-adornment-password"
+            sx={responsiveInputLabel}
+          >
+            Password*
+          </InputLabel>
+          <OutlinedInput
+            style={responsiveInput}
+            sx={{
+              paddingLeft: "10px",
+              fontSize: "20px",
+            }}
+            aria-describedby="outlined-weight-helper-text"
+            id="outlined-adornment-password"
+            type={showPassword ? "text" : "password"}
+            onChange={handlePasswordChange}
+            value={password}
+            endAdornment={
+              <InputAdornment position="end" style={{ padding: "10px" }}>
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={handleClickShowPassword}
+                  onMouseDown={handleMouseDownPassword}
+                  edge="end"
+                >
+                  {showPassword ? <Visibility /> : <VisibilityOff />}
+                </IconButton>
+              </InputAdornment>
+            }
+          />
+        </FormControl>
 
                 <div className="grid grid-cols-2 lg:grid-cols-2  ml-2 items-start justify-between mt-[19px] w-full ">
                     <div className="flex flex-row gap-2 items-center justify-start mb-0.5">

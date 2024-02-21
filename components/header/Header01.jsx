@@ -202,7 +202,7 @@ export default function Header01() {
                 <div>
                 </div>
                 <Link
-                  href="/user/avatar_6"
+                  href="/loginpage"
                   className="dark:hover:bg-jacarta-600 hover:text-accent focus:text-accent hover:bg-jacarta-50 flex items-center space-x-2 rounded-xl px-5 py-2 transition-colors"
                   >
 
