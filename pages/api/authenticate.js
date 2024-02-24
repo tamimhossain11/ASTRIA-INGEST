@@ -8,7 +8,7 @@ export default async function handler(req, res) {
 
     try {
       // Send authentication request to FTK Connect
-      const response = await axios.post('https://localhost:4443/api/v2/enterpriseapi/core/user', {
+      const response = await axios.post('https://localhost:4443/api/v2/enterpriseapi/core/users', {
         username,
         password,
       }, {
